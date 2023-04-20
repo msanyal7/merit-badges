@@ -30,11 +30,11 @@ class MeritBadges extends LitElement {
 
   render() {
     return html`
-      <div class= "badgeLabel"> 
+    <div class= "badgeLabel"> 
         <div class = "circle"> 
-      <simple-icon accent-color="white" icon="av:play-circle-filled"></simple-icon>
-  </div>
-      </div>
+      <simple-icon accent-color="pink" icon="av:play-circle-filled"></simple-icon>
+       </div>
+    </div>
            
             
     `;
