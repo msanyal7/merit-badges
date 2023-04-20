@@ -15,14 +15,17 @@ class MeritBadges extends LitElement {
     .badgeLabel{
       font-size: 45px;
       font-color: green;
-    .circle{}
+    }
+    .circle{
+
+    }
   `;
 
   constructor() {
    this.header = "header";
    this.circle ="------------";
    this.lock = "";
-   badgeLabel = "Test Label"
+   this.badgeLabel = "Test Label"
   }
 
   render() {
