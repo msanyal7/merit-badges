@@ -16,8 +16,6 @@
     "start": "web-dev-server"
   },
   "dependencies": {
-    "@lrnwebcomponents/absolute-position-behavior": "^4.2.0",
-    "@lrnwebcomponents/simple-icon": "^4.2.0",
     "lit": "^2.0.2"
   },
   "devDependencies": {
