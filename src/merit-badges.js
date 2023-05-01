@@ -10,7 +10,8 @@ class MeritBadges extends LitElement {
     lock: { type: String },
     badgeLabel: { type: String },
     pusheenImg: { type: String },
-    isLocked: { type: Boolean }
+    isLocked: { type: Boolean },
+    steps: { type:Array}
   }
 
   static styles = css`
@@ -23,8 +24,8 @@ class MeritBadges extends LitElement {
       height: 100%;
     }
     .circle{
-      width: 200px;
-      height: 200px;
+      width: 400px;
+      height: 400px;
       background: red;
       border-radius: 50%;
       padding: 20px;
@@ -60,33 +61,53 @@ class MeritBadges extends LitElement {
       opacity: 0.5;
       pointer-events: none;
     }
-
-
+    .content {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100%;
+    }
   `;
 
   constructor() {
     super();
-    this.header = "header";
+    this.header = "Badge Title";
     this.circle = "------------";
     this.lock = "";
     this.pusheenImg = "https://pusheen.com/wp-content/uploads/2021/07/EverGreen-Donut-Random-Button.svg";
     this.badgeLabel = "Test Label";
     this.isLocked = true; 
+    this.steps = ["g", "k", "l"]; 
   }
 
   render() {
     return html`
-      <div class="circle ${this.isLocked ? 'locked' : ''}">
-        <img class="pusheenImg" src="${this.pusheenImg}" alt="Pusheen Image">
-        <div class="header">${this.header}</div>
+      <div class="circle">
+        <div class="content">
+          <img class="pusheenImg" src="${this.pusheenImg}" alt="Pusheen Image">
+          <div class="header">${this.header}</div>
+          <div class="header">
+            <ul>
+              ${this.steps.map((step) =>
+                html`
+                  <li>${step}</li>
+              `
+            )}
+          </ul>
+        </div> 
         <simple-icon accent-color="pink" icon="av:play-circle-filled"></simple-icon>
         <button @click="${this.toggleLock}">Toggle Lock</button> 
-      </div>
+      </div>  
+
     `;
   }
+
   toggleLock() {
     this.isLocked = !this.isLocked; 
+    console.log(this.isLocked);
   }
 }
 
 customElements.define('merit-badges', MeritBadges);
+
