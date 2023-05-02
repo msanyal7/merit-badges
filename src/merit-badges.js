@@ -58,7 +58,7 @@ class MeritBadges extends LitElement {
       max-height: 100px;
     }
     .circle.locked {
-      opacity: 0.5;
+      opacity: 0.2;
       pointer-events: none;
     }
     .content {
@@ -96,7 +96,7 @@ class MeritBadges extends LitElement {
           <simple-icon accent-color="pink" icon="av:play-circle-filled"></simple-icon>
         </div>  
       </div>
-      <button @click="${this.toggleLock}">Toggle Lock</button> 
+      <button @click="${this.toggleLock}">Unlock Badge</button> 
     `;
   }
 
