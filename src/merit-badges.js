@@ -96,7 +96,7 @@ class MeritBadges extends LitElement {
           <simple-icon accent-color="pink" icon="av:play-circle-filled"></simple-icon>
         </div>  
       </div>
-      <button @click="${this.toggleLock}">Unlock Badge</button> 
+      
     `;
   }
 
