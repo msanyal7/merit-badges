@@ -83,23 +83,20 @@ class MeritBadges extends LitElement {
 
   render() {
     return html`
-      <div class="circle">
+      <div class="circle ${this.isLocked ? 'locked' : ''}">
+        ${this.isLocked ? html`<simple-icon accent-color="#666" icon="icons:lock"></simple-icon>` : ''}
         <div class="content">
           <img class="pusheenImg" src="${this.pusheenImg}" alt="Pusheen Image">
           <div class="header">${this.header}</div>
           <div class="header">
             <ul>
-              ${this.steps.map((step) =>
-                html`
-                  <li>${step}</li>
-              `
-            )}
-          </ul>
-        </div> 
-        <simple-icon accent-color="pink" icon="av:play-circle-filled"></simple-icon>
-        <button @click="${this.toggleLock}">Toggle Lock</button> 
-      </div>  
-
+              ${this.steps.map((step) => html`<li>${step}</li>`)}
+            </ul>
+          </div> 
+          <simple-icon accent-color="pink" icon="av:play-circle-filled"></simple-icon>
+        </div>  
+      </div>
+      <button @click="${this.toggleLock}">Toggle Lock</button> 
     `;
   }
 
