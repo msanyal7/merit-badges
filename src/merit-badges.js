@@ -1,5 +1,6 @@
 import { LitElement, html, css } from 'lit-element';
 import "@lrnwebcomponents/simple-icon/simple-icon.js";
+import "@lrnwebcomponents/absolute-position-behavior/absolute-position-behavior.js";
 import "@lrnwebcomponents/simple-icon/lib/simple-icons.js";
 const logo = new URL('../assets/open-wc-logo.svg', import.meta.url).href;
 
@@ -11,7 +12,8 @@ class MeritBadges extends LitElement {
     badgeLabel: { type: String },
     pusheenImg: { type: String },
     isLocked: { type: Boolean },
-    steps: { type:Array}
+    steps: { type:Array},
+    verifUrl: {type:String}
   }
 
   static styles = css`
@@ -68,6 +70,14 @@ class MeritBadges extends LitElement {
       align-items: center;
       height: 100%;
     }
+  .simple-icon {
+    flex-direction: row;
+    display: inline-block;
+     margin: 5px;
+    } 
+    .direction{
+      flex-direction: row;
+    } 
   `;
 
   constructor() {
@@ -79,6 +89,7 @@ class MeritBadges extends LitElement {
     this.badgeLabel = "Test Label";
     this.isLocked = true; 
     this.steps = ["g", "k", "l"]; 
+    this.verifUrl="https://pusheen.com/";
   }
 
   render() {
@@ -93,7 +104,33 @@ class MeritBadges extends LitElement {
               ${this.steps.map((step) => html`<li>${step}</li>`)}
             </ul>
           </div> 
-          <simple-icon accent-color="pink" icon="av:play-circle-filled"></simple-icon>
+         <div class = "direction"> 
+
+         <a href=${this.verifUrl}>
+            <simple-icon accent-color="pink" icon="av:play-circle-filled"></simple-icon>
+          </a>
+
+          
+<badge-sticker id="badge">
+  <simple-icon-button
+      icon=<simple-icon accent-color="lime" icon="tab"> </simple-icon>
+      @click="${this.skillClick}"
+  </simple-icon-button>
+</badge-sticker>
+
+<absolute-position-behavior
+            justify
+            position="bottom"
+            allow-overlap
+            sticky
+            auto
+            .target="${this.activeNode}"
+            ?hidden="${!this.skillsOpened}"
+          >
+          ${this.steps.map((step) => html`<li>${step}</li>`)}
+</absolute-position-behavior>
+          
+          </div>
         </div>  
       </div>
       
@@ -104,6 +141,21 @@ class MeritBadges extends LitElement {
     this.isLocked = !this.isLocked; 
     console.log(this.isLocked);
   }
+
+  firstUpdated(changedProperties) {
+    if (super.firstUpdated) {
+      super.firstUpdated(changedProperties);
+    }
+    this.activeNode = this.shadowRoot.querySelector("#badge");
+  }
+  
+  skillClick(e) {
+    this.skillsOpened = !this.skillsOpened;
+  }
+  
+   
+
+ 
 }
 
 customElements.define('merit-badges', MeritBadges);
