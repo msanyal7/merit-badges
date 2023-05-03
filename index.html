@@ -21,17 +21,22 @@
 
 <body>
   <merit-badges></merit-badges>
-  <button class = 'unlockBtn'>Unlock Badge</button> 
+  <badge-set></badge-set>
+
+  <button id="unlockBtn">Unlock Badge</button>
 </body>
 
   <script type="module" src="./src/merit-badges.js"></script>
+ <script type="module" src="./src/badge-set.js"></script>
+
 
 <script>
   
-        document.querySelector(".unlockBtn").addEventListener("click", function (e) {
-          this.toggleLock()
-          
-        })
+  const unlockBtn = document.querySelector('#unlockBtn');
+  const meritBadge = document.querySelector('merit-badges');
+  unlockBtn.addEventListener('click', () => {
+    meritBadge.toggleLock();
+  });
       
        
   </script>
