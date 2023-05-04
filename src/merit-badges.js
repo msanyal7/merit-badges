@@ -99,7 +99,7 @@ class MeritBadges extends LitElement {
       color: black; 
       fill: transparent;
     }
-   .path {
+   path {
    fill: transparent;
    }
 
