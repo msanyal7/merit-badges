@@ -94,14 +94,19 @@ class MeritBadges extends LitElement {
     border-radius: 5px
     }
     .date{
-      font-family: 'Luckiest Guy', cursive;
-      font-size: 35px;
-      color: black; 
-      fill: transparent;
+      font-size: 200px;
+      color: black;
+     text-align: center;
     }
+    .date-svg {
+    font-size: 100px;
+    text-align: center;
+  }
    path {
    fill: transparent;
    }
+  
+   
 
     
 
@@ -134,14 +139,15 @@ class MeritBadges extends LitElement {
       <div class="circle ${this.isLocked ? 'locked' : ''}">
         ${this.isLocked ? html`<simple-icon accent-color="#666" icon="icons:lock"></simple-icon>` : ''}
         <div class="content">
-        ${!this.isLocked ? html`<svg viewBox="0 0 500 500">
-          <path id="curve" d="M73.2,148.6c4-6.1,65.5-96.8,178.6-95.6c111.3,1.2,170.8,90.3,175.1,97" />
-          <text width="500">
-            <textPath xlink:href="#curve">
-              ${this.date}
-            </textPath>
-          </text>
-        </svg>` : ''}
+        ${!this.isLocked ? html`
+        <svg class="date-svg" viewBox="0 0 1000 800">
+  <path id="curve" d="M73.2,148.6c4-6.1,65.5-96.8,178.6-95.6c111.3,1.2,170.8,90.3,175.1,97" />
+  <text width="900" font-size="150">
+    <textPath xlink:href="#curve">
+      ${this.date}
+    </textPath>
+  </text>
+</svg>` : ''}
           <img class="pusheenImg" src="${this.pusheenImg}" alt="Pusheen Image">
           <div class="direction"> 
             <a href=${this.verifUrl}>
