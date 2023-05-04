@@ -20,7 +20,7 @@ class MeritBadges extends SimpleColors {
       detailNode: {type: Boolean},
       details: {type: Array},
       detailsOpened: {type: Boolean},
-      steps: { type:Array},
+      steps: { type:Array,reflect: true},
       date: {type: String},
       verifUrl: {type:String}
     }
@@ -199,6 +199,8 @@ class MeritBadges extends SimpleColors {
           </div>
         </div>
       </div>
+      <!-- The index.html button wasn't working on my end so I put this here in case it needs to be opened this way-->
+      <button @click="${this.toggleLock}">Toggle Lock</button> 
     `;
   }
   toggleLock() {
