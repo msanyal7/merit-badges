@@ -12,7 +12,13 @@ class MeritBadges extends LitElement {
     badgeLabel: { type: String },
     pusheenImg: { type: String },
     isLocked: { type: Boolean },
+    activeNode: {type: Object},
+    skillsOpened: {type: Boolean},
+    detailNode: {type: Boolean},
+    details: {type: Array},
+    detailsOpened: {type: Boolean},
     steps: { type:Array},
+    date: {type: String},
     verifUrl: {type:String}
   }
 
@@ -24,6 +30,7 @@ class MeritBadges extends LitElement {
       justify-content: center;
       align-items: center;
       height: 100%;
+      transform: skew(-10deg) translate(0, 50%);
     }
     .circle{
       width: 400px;
@@ -78,6 +85,20 @@ class MeritBadges extends LitElement {
     .direction{
       flex-direction: row;
     } 
+    .styleSide{
+      background-color: #808080;
+     font-size: 16px;
+     color: #ffb6c1;
+     padding: 10px;
+     min-width: 100%;
+    border-radius: 5px
+    }
+    .date{
+      color: black; 
+    }
+    
+
+    
   `;
 
   constructor() {
@@ -88,55 +109,73 @@ class MeritBadges extends LitElement {
     this.pusheenImg = "https://pusheen.com/wp-content/uploads/2021/07/EverGreen-Donut-Random-Button.svg";
     this.badgeLabel = "Test Label";
     this.isLocked = true; 
-    this.steps = ["g", "k", "l"]; 
+    this.steps = ["Be an adorable cat", "like playing", "have fun"]; 
     this.verifUrl="https://pusheen.com/";
+    this.activeNode = null;
+    this.skillsOpened = false;
+    this.detailNode = null;
+    this.details = ["Warning: cute cat", "Ready to meow", "l"];
+    this.detailsOpened = false ;
+    this.date = this.retreiveDate();
+
   }
+
+
 
   render() {
     return html`
       <div class="circle ${this.isLocked ? 'locked' : ''}">
         ${this.isLocked ? html`<simple-icon accent-color="#666" icon="icons:lock"></simple-icon>` : ''}
         <div class="content">
+          ${!this.isLocked ? html`<div class= "date">${this.date}</div>` : ''}
           <img class="pusheenImg" src="${this.pusheenImg}" alt="Pusheen Image">
-          <div class="header">${this.header}</div>
-          <div class="header">
-            <ul>
+          <div class="direction"> 
+            <a href=${this.verifUrl}>
+              <simple-icon accent-color="pink" icon="av:play-circle-filled"></simple-icon>
+            </a>
+            <badge-sticker id="badge">
+              <simple-icon-button @click="${this.skillClick}">
+                <simple-icon accent-color="lime" icon="tab"></simple-icon>
+              </simple-icon-button>
+            </badge-sticker>
+            <absolute-position-behavior
+              class="styleSide" 
+              justify
+              position="right"
+              allow-overlap
+              sticky
+              auto
+              .target="${this.activeNode}"
+              ?hidden="${!this.skillsOpened}"
+            >
               ${this.steps.map((step) => html`<li>${step}</li>`)}
-            </ul>
+            </absolute-position-behavior>
+  
+            <badge-sticker id="badgeDetail">
+              <simple-icon-button @click="${this.detailsClick}">
+                <simple-icon accent-color="orange" icon="icons:description"></simple-icon>
+              </simple-icon-button>
+            </badge-sticker>
+            <absolute-position-behavior
+              class="styleSide" 
+              justify
+              position="right"
+              allow-overlap
+              sticky
+              auto
+              .target="${this.detailNode}"
+              ?hidden="${!this.detailsOpened}"
+            >
+              ${this.details.map((detail) => html`<li>${detail}</li>`)}
+            </absolute-position-behavior>
+            <div class="header">
+            ${this.header}
           </div> 
-         <div class = "direction"> 
-
-         <a href=${this.verifUrl}>
-            <simple-icon accent-color="pink" icon="av:play-circle-filled"></simple-icon>
-          </a>
-
-          
-<badge-sticker id="badge">
-  <simple-icon-button
-      icon=<simple-icon accent-color="lime" icon="tab"> </simple-icon>
-      @click="${this.skillClick}"
-  </simple-icon-button>
-</badge-sticker>
-
-<absolute-position-behavior
-            justify
-            position="bottom"
-            allow-overlap
-            sticky
-            auto
-            .target="${this.activeNode}"
-            ?hidden="${!this.skillsOpened}"
-          >
-          ${this.steps.map((step) => html`<li>${step}</li>`)}
-</absolute-position-behavior>
-          
           </div>
-        </div>  
+        </div>
       </div>
-      
     `;
   }
-
   toggleLock() {
     this.isLocked = !this.isLocked; 
     console.log(this.isLocked);
@@ -147,10 +186,25 @@ class MeritBadges extends LitElement {
       super.firstUpdated(changedProperties);
     }
     this.activeNode = this.shadowRoot.querySelector("#badge");
+    this.detailNode = this.shadowRoot.querySelector("#badgeDetail");
+    this.date = this.retreiveDate();
   }
   
   skillClick(e) {
     this.skillsOpened = !this.skillsOpened;
+  }
+
+  detailsClick(e){
+    this.detailsOpened = !this.detailsOpened;
+  }
+
+  retreiveDate (e){
+     var today = new Date();
+     var dd = String(today.getDate()).padStart(2, '0');
+     var mm = String(today.getMonth() + 1).padStart(2, '0');
+     var yyyy = today.getFullYear();
+     today = mm + '/' + dd + '/' + yyyy;
+      return today.toString();
   }
   
    
