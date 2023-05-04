@@ -1,53 +1,58 @@
-import { LitElement, html, css } from 'lit-element';
+import { html, css } from 'lit-element';
 import "@lrnwebcomponents/simple-icon/simple-icon.js";
 import "@lrnwebcomponents/absolute-position-behavior/absolute-position-behavior.js";
 import "@lrnwebcomponents/simple-icon/lib/simple-icons.js";
-const logo = new URL('../assets/open-wc-logo.svg', import.meta.url).href;
+import "@lrnwebcomponents/simple-colors/simple-colors.js";
+import { SimpleColors } from '@lrnwebcomponents/simple-colors/simple-colors.js';
 
-class MeritBadges extends LitElement {
-  static properties = {
-    header: { type: String },
-    circle: { type: String },
-    lock: { type: String },
-    badgeLabel: { type: String },
-    pusheenImg: { type: String },
-    isLocked: { type: Boolean },
-    activeNode: {type: Object},
-    skillsOpened: {type: Boolean},
-    detailNode: {type: Boolean},
-    details: {type: Array},
-    detailsOpened: {type: Boolean},
-    steps: { type:Array},
-    date: {type: String},
-    verifUrl: {type:String}
+class MeritBadges extends SimpleColors {
+  static get properties() {
+    return{
+      ...super.properties,
+      header: { type: String },
+      circle: { type: String },
+      lock: { type: String },
+      badgeLabel: { type: String },
+      pusheenImg: { type: String },
+      isLocked: { type: Boolean },
+      activeNode: {type: Object},
+      skillsOpened: {type: Boolean},
+      detailNode: {type: Boolean},
+      details: {type: Array},
+      detailsOpened: {type: Boolean},
+      steps: { type:Array},
+      date: {type: String},
+      verifUrl: {type:String}
+    }
   }
 
-  static styles = css`
+  static get styles(){ 
+   return [...super.styles, css`
     .badgeLabel{
       font-size: 40px;
-      color: #00FF00;
-      display: flex;
+      color: var(--simple-colors-default-theme-deep-orange-9);
+      display: inline-flex;
       justify-content: center;
       align-items: center;
       height: 100%;
       transform: skew(-10deg) translate(0, 50%);
     }
     .circle{
-      width: 400px;
-      height: 400px;
+      width: 300px;
+      height: 300px;
       background: red;
       border-radius: 50%;
-      padding: 20px;
-      margin: 10px;
+      padding: 10px;
+      margin: 0px;
       background: #ffff;
       color: #fff;
       font-size: 21px;
       font-weight: bold;
       line-height: 1.3em;
-      border: 2px dashed #aa3030;
+      border: 2px dashed var(--simple-colors-default-theme-deep-orange-9);
       border-radius: 50%;
       box-shadow: 0 0 0 4px #ffff, 2px 1px 6px 4px rgba(10, 10, 0, 0.5);
-      text-shadow: -1px -1px #aa3030;
+      text-shadow: -1px -1px var(--simple-colors-default-theme-grey-4);
       font-weight: normal;
       text-align: center;
       vertical-align: middle;
@@ -59,12 +64,13 @@ class MeritBadges extends LitElement {
       pointer-events: auto;
     }
     .header{
-      color: green; 
+      color: var(--simple-colors-default-theme-green-9); 
       margin-top: 10px; 
     }
     .pusheenImg {
       max-width: 100px;
       max-height: 100px;
+      padding: 0px;
     }
     .circle.locked {
       opacity: 0.2;
@@ -76,6 +82,7 @@ class MeritBadges extends LitElement {
       justify-content: center;
       align-items: center;
       height: 100%;
+      margin-top: -50px;
     }
   .simple-icon {
     flex-direction: row;
@@ -88,21 +95,19 @@ class MeritBadges extends LitElement {
     .styleSide{
       background-color: #808080;
      font-size: 16px;
-     color: #ffb6c1;
+     color: var(--simple-colors-default-theme-pink-7);
      padding: 10px;
      min-width: 100%;
     border-radius: 5px
     }
     .date{
-      font-size: 200px;
       color: black;
-     text-align: center;
+      text-align: center;
     }
-    .date-svg {
-    font-size: 100px;
-    text-align: center;
-  }
    path {
+    display: flex;
+  justify-content: center;
+  align-items: center;
    fill: transparent;
    }
   
@@ -111,11 +116,12 @@ class MeritBadges extends LitElement {
     
 
     
-  `;
+  `];
+  }
 
   constructor() {
     super();
-    this.header = "Badge Title";
+    this.header = "Cute Cat Badge";
     this.circle = "------------";
     this.lock = "";
     this.pusheenImg = "https://pusheen.com/wp-content/uploads/2021/07/EverGreen-Donut-Random-Button.svg";
@@ -126,7 +132,7 @@ class MeritBadges extends LitElement {
     this.activeNode = null;
     this.skillsOpened = false;
     this.detailNode = null;
-    this.details = ["Warning: cute cat", "Ready to meow", "l"];
+    this.details = ["Warning: cute cat", "Ready to meow", "yarn"];
     this.detailsOpened = false ;
     this.date = this.retreiveDate();
 
@@ -139,15 +145,14 @@ class MeritBadges extends LitElement {
       <div class="circle ${this.isLocked ? 'locked' : ''}">
         ${this.isLocked ? html`<simple-icon accent-color="#666" icon="icons:lock"></simple-icon>` : ''}
         <div class="content">
-        ${!this.isLocked ? html`
-        <svg class="date-svg" viewBox="0 0 1000 800">
-  <path id="curve" d="M73.2,148.6c4-6.1,65.5-96.8,178.6-95.6c111.3,1.2,170.8,90.3,175.1,97" />
-  <text width="900" font-size="150">
-    <textPath xlink:href="#curve">
-      ${this.date}
-    </textPath>
-  </text>
-</svg>` : ''}
+        ${!this.isLocked ? html`<svg viewBox="0 0 200 200">
+        <path id="curve" d="M73.2,148.6c4-6.1,40-96.8,178.6-95.6c123.3,1.2,170.8,90.3,200,95" />
+          <text x="40%" y="40%" dominant-baseline="middle" text-anchor="middle" font-size="30" fill="pink" font-weight="bold">
+          <textPath xlink:href="#curve">
+          ${this.date}
+          </textPath>
+          </text>
+        </svg>` : ''}
           <img class="pusheenImg" src="${this.pusheenImg}" alt="Pusheen Image">
           <div class="direction"> 
             <a href=${this.verifUrl}>
